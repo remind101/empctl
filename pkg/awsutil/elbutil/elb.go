@@ -53,12 +53,13 @@ func (c *Client) ListByTags(tags map[string]string) ([]*LoadBalancer, error) {
 	var (
 		nextMarker *string
 		lbs        []*LoadBalancer
+		pageSize   int64 = 20
 	)
 
 	for {
 		out, err := c.elbClient.DescribeLoadBalancers(&elb.DescribeLoadBalancersInput{
 			Marker:   nextMarker,
-			PageSize: aws.Long(20), // Set this to 20, because DescribeTags has a limit of 20 on the LoadBalancerNames attribute.
+			PageSize: &pageSize,
 		})
 		if err != nil {
 			return nil, err

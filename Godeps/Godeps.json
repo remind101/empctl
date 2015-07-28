@@ -7,38 +7,38 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/aws",
-			"Comment": "v0.6.6-2-g45ba2f8",
-			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+			"Comment": "v0.7.0-2-gab85612",
+			"Rev": "ab85612d91c52e8f560e57d9ebdcf9682eaa24c7"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/endpoints",
-			"Comment": "v0.6.6-2-g45ba2f8",
-			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+			"Comment": "v0.7.0-2-gab85612",
+			"Rev": "ab85612d91c52e8f560e57d9ebdcf9682eaa24c7"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/query",
-			"Comment": "v0.6.6-2-g45ba2f8",
-			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+			"Comment": "v0.7.0-2-gab85612",
+			"Rev": "ab85612d91c52e8f560e57d9ebdcf9682eaa24c7"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/rest",
-			"Comment": "v0.6.6-2-g45ba2f8",
-			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+			"Comment": "v0.7.0-2-gab85612",
+			"Rev": "ab85612d91c52e8f560e57d9ebdcf9682eaa24c7"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/xml/xmlutil",
-			"Comment": "v0.6.6-2-g45ba2f8",
-			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+			"Comment": "v0.7.0-2-gab85612",
+			"Rev": "ab85612d91c52e8f560e57d9ebdcf9682eaa24c7"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/signer/v4",
-			"Comment": "v0.6.6-2-g45ba2f8",
-			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+			"Comment": "v0.7.0-2-gab85612",
+			"Rev": "ab85612d91c52e8f560e57d9ebdcf9682eaa24c7"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/service/elb",
-			"Comment": "v0.6.6-2-g45ba2f8",
-			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+			"Comment": "v0.7.0-2-gab85612",
+			"Rev": "ab85612d91c52e8f560e57d9ebdcf9682eaa24c7"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/cli",
