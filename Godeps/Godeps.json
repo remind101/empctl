@@ -6,9 +6,52 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws",
+			"Comment": "v0.6.6-2-g45ba2f8",
+			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/endpoints",
+			"Comment": "v0.6.6-2-g45ba2f8",
+			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/query",
+			"Comment": "v0.6.6-2-g45ba2f8",
+			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/rest",
+			"Comment": "v0.6.6-2-g45ba2f8",
+			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/xml/xmlutil",
+			"Comment": "v0.6.6-2-g45ba2f8",
+			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/signer/v4",
+			"Comment": "v0.6.6-2-g45ba2f8",
+			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/service/elb",
+			"Comment": "v0.6.6-2-g45ba2f8",
+			"Rev": "45ba2f817fbf625fe48cf9b51fae13e5dfba6171"
+		},
+		{
 			"ImportPath": "github.com/codegangsta/cli",
 			"Comment": "1.2.0-26-gf7ebb76",
 			"Rev": "f7ebb761e83e21225d1d8954fde853bf8edd46c4"
+		},
+		{
+			"ImportPath": "github.com/mgutz/ansi",
+			"Rev": "452f5f5396543168418a299cd963697ac742b56e"
+		},
+		{
+			"ImportPath": "github.com/vaughan0/go-ini",
+			"Rev": "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1"
 		}
 	]
 }
