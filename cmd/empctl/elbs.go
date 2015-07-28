@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/aws/aws-sdk-go/service/elb"
 	"github.com/codegangsta/cli"
 	"github.com/mgutz/ansi"
@@ -22,7 +22,7 @@ func init() {
 }
 
 func cmdELBInfo(c *cli.Context) {
-	client := elbutil.New(elb.New(aws.DefaultConfig))
+	client := elbutil.New(elb.New(nil), ec2.New(nil))
 	lbs, err := client.ListByTags(map[string]string{"App": c.String("app")})
 	if err != nil {
 		log.Fatal(err)
@@ -31,6 +31,7 @@ func cmdELBInfo(c *cli.Context) {
 	for _, lb := range lbs {
 		fmt.Printf("Name:       %s\n", lb.Name)
 		fmt.Printf("DNSName:    %s\n", lb.DNSName)
+		fmt.Printf("SG:         %s\n", strings.Join(lb.SecurityGroups, ", "))
 
 		ss := make([]string, len(lb.InstanceStates))
 		for i, s := range lb.InstanceStates {

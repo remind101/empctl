@@ -2,6 +2,7 @@ package elbutil
 
 import (
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/aws/aws-sdk-go/service/elb"
 )
 
@@ -25,6 +26,9 @@ type LoadBalancer struct {
 
 	InstanceStates []InstanceState
 
+	// SecurityGroups
+	SecurityGroups []string
+
 	// Tags contain the tags attached to the LoadBalancer
 	Tags map[string]string
 }
@@ -37,11 +41,12 @@ type InstanceState struct {
 }
 
 type Client struct {
-	client *elb.ELB
+	elbClient *elb.ELB
+	ec2Client *ec2.EC2
 }
 
-func New(c *elb.ELB) *Client {
-	return &Client{client: c}
+func New(c *elb.ELB, e *ec2.EC2) *Client {
+	return &Client{elbClient: c, ec2Client: e}
 }
 
 func (c *Client) ListByTags(tags map[string]string) ([]*LoadBalancer, error) {
@@ -51,7 +56,7 @@ func (c *Client) ListByTags(tags map[string]string) ([]*LoadBalancer, error) {
 	)
 
 	for {
-		out, err := c.client.DescribeLoadBalancers(&elb.DescribeLoadBalancersInput{
+		out, err := c.elbClient.DescribeLoadBalancers(&elb.DescribeLoadBalancersInput{
 			Marker:   nextMarker,
 			PageSize: aws.Long(20), // Set this to 20, because DescribeTags has a limit of 20 on the LoadBalancerNames attribute.
 		})
@@ -73,7 +78,7 @@ func (c *Client) ListByTags(tags map[string]string) ([]*LoadBalancer, error) {
 		}
 
 		// Find all the tags for this batch of load balancers.
-		out2, err := c.client.DescribeTags(&elb.DescribeTagsInput{LoadBalancerNames: names})
+		out2, err := c.elbClient.DescribeTags(&elb.DescribeTagsInput{LoadBalancerNames: names})
 		if err != nil {
 			return lbs, err
 		}
@@ -95,7 +100,7 @@ func (c *Client) ListByTags(tags map[string]string) ([]*LoadBalancer, error) {
 				}
 
 				// Get the instance health
-				hOut, err := c.client.DescribeInstanceHealth(&elb.DescribeInstanceHealthInput{
+				hOut, err := c.elbClient.DescribeInstanceHealth(&elb.DescribeInstanceHealthInput{
 					LoadBalancerName: d.LoadBalancerName,
 				})
 				if err != nil {
@@ -112,6 +117,8 @@ func (c *Client) ListByTags(tags map[string]string) ([]*LoadBalancer, error) {
 					}
 				}
 
+				sgNames, _ := c.SGNames(lb.SecurityGroups)
+
 				lbs = append(lbs, &LoadBalancer{
 					Name:           *lb.LoadBalancerName,
 					DNSName:        *lb.DNSName,
@@ -119,6 +126,7 @@ func (c *Client) ListByTags(tags map[string]string) ([]*LoadBalancer, error) {
 					SSLCert:        sslCert,
 					InstancePort:   instancePort,
 					Tags:           mapTags(d.Tags),
+					SecurityGroups: sgNames,
 					InstanceStates: iStates,
 				})
 			}
@@ -132,6 +140,23 @@ func (c *Client) ListByTags(tags map[string]string) ([]*LoadBalancer, error) {
 	}
 
 	return lbs, nil
+}
+
+func (c *Client) SGNames(sgIDs []*string) ([]string, error) {
+	names := make([]string, 0)
+
+	res, err := c.ec2Client.DescribeSecurityGroups(&ec2.DescribeSecurityGroupsInput{
+		GroupIDs: sgIDs,
+	})
+	if err != nil {
+		return names, err
+	}
+
+	for _, sg := range res.SecurityGroups {
+		names = append(names, *sg.GroupName)
+	}
+
+	return names, nil
 }
 
 // mapTags takes a list of []*elb.Tag's and converts them into a map[string]string
@@ -180,4 +205,12 @@ func containsTag(t *elb.Tag, tags []*elb.Tag) bool {
 		}
 	}
 	return false
+}
+
+func stringSlice(ss []*string) []string {
+	res := make([]string, len(ss))
+	for i, s := range ss {
+		res[i] = *s
+	}
+	return res
 }
